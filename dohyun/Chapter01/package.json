@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "name": "chapter01",
+  "description": "",
+  "version": "1.0.0",
+  "main": "statement.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "before": "node --experimental-json-modules BeforeRefactoring.js",
+    "after": "node --experimental-json-modules AfterRefactoring.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
