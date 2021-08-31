@@ -37,6 +37,10 @@ class PerformanceCalculator {
   }
 }
 
+function createPerformanceCalculator(aPerformance, aPlay) {
+  return new PerformanceCalculator(aPerformance, aPlay);
+}
+
 function playFor(perf) {
   return plays[perf.playID];
 }
@@ -51,7 +55,7 @@ function volumeCreditsFor(aPerformance) {
 }
 
 function enrichPerformance(aPerformance) {
-  const calculator = new PerformanceCalculator(
+  const calculator = createPerformanceCalculator(
     aPerformance,
     playFor(aPerformance)
   );
