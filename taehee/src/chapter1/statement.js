@@ -63,10 +63,10 @@ function totalAmount() {
   return result;
 }
 
-function renderPlainText(invoice) {
-  let result = `청구 내역 (고객명: ${invoice.customer})\n`;
+function renderPlainText(data) {
+  let result = `청구 내역 (고객명: ${data.customer})\n`;
 
-  for (let perf of invoice.performances) {
+  for (let perf of data.performances) {
     // 청구 내역을 출력한다.
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
       perf.audience
@@ -79,7 +79,11 @@ function renderPlainText(invoice) {
 }
 
 function statement(invoice) {
-  return renderPlainText(invoice);
+  const statementData = {};
+  statementData.customer = invoice.customer;
+  statementData.performances = invoice.performances;
+
+  return renderPlainText(statementData);
 }
 
 module.exports = {
