@@ -47,11 +47,11 @@ function usd(anumber) {
 function totalVolumeCredits(invoice) {
   // 포인트를 적립한다.
 
-  let volumeCredits = 0;
+  let result = 0;
   for (let perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(perf);
+    result += perf.volumeCredits;
   }
-  return volumeCredits;
+  return result;
 }
 
 function totalAmount(invoice) {
@@ -80,6 +80,7 @@ function enrichPerformance(aPerformance) {
   const result = Object.assign({}, aPerformance);
   result.play = playFor(result);
   result.amount = amountFor(result);
+  result.volumeCredits = volumeCreditsFor(result);
   return result;
 }
 
