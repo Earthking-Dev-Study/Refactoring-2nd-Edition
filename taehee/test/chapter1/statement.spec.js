@@ -1,4 +1,4 @@
-const invoices = require('../data/invoices.json');
+const invoices = require('../../data/invoices.json');
 const f = require('../../src/chapter1/statement.js');
 const statement = f.statement;
 describe('play test', () => {

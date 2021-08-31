@@ -1,4 +1,4 @@
-const plays = require('../../test/data/plays.json');
+const plays = require('../../data/plays.json');
 
 function playFor(perf) {
   return plays[perf.playID];
