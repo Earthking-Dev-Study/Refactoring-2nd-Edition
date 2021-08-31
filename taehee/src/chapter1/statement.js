@@ -46,12 +46,13 @@ function usd(anumber) {
 
 function totalVolumeCredits(invoice) {
   // 포인트를 적립한다.
-
-  return invoice.performances.reduce((acc, b) => acc + b.volumeCredits, 0);
+  const accumulateVolumeCredits = (acc, b) => acc + b.volumeCredits;
+  return invoice.performances.reduce(accumulateVolumeCredits, 0);
 }
 
 function totalAmount(invoice) {
-  return invoice.performances.reduce((total, b) => total + b.amount, 0);
+  const accumulateAmount = (total, b) => total + b.amount;
+  return invoice.performances.reduce(accumulateAmount, 0);
 }
 
 function renderPlainText(data) {
