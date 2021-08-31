@@ -55,12 +55,7 @@ function totalVolumeCredits(invoice) {
 }
 
 function totalAmount(invoice) {
-  let result = 0;
-  for (let perf of invoice.performances) {
-    result += perf.amount;
-  }
-
-  return result;
+  return invoice.performances.reduce((total, b) => total + b.amount, 0);
 }
 
 function renderPlainText(data) {
