@@ -78,11 +78,16 @@ function renderPlainText(data) {
   return result;
 }
 
+function enrichPerformance(aPerformance) {
+  const result = Object.assign({}, aPerformance);
+  result.play = playFor(result);
+  return result;
+}
+
 function statement(invoice) {
   const statementData = {};
   statementData.customer = invoice.customer;
-  statementData.performances = invoice.performances;
-
+  statementData.performances = invoice.performances.map(enrichPerformance);
   return renderPlainText(statementData);
 }
 
