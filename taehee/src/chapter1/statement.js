@@ -1,6 +1,4 @@
 const plays = require("../../data/plays.json");
-const invoices = require("../../data/invoices.json");
-const invoice = invoices[0];
 
 function playFor(perf) {
   return plays[perf.playID];
