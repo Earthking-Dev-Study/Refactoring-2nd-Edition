@@ -36,7 +36,7 @@ export default function createStatementData(invoice, plays) {
 }
 
 function createPerformanceCalculator(aPerformance, aPlay) {
-  switch ((aPlay, type)) {
+  switch (aPlay.type) {
     case "tragedy":
       return new TragedyCalculator(aPerformance, aPlay);
     case "comedy":
@@ -57,11 +57,7 @@ class PerformanceCalculator {
     let result = 0;
     switch (this.play.type) {
       case "tragedy":
-        result = 40000;
-        if (this.performances.audience > 30) {
-          result += 1000 * (this.performances.audience - 30);
-        }
-        break;
+        throw "오류 발생"; // 비극 공연료는 TragedyCalculator를 이용하도록 유도
 
       case "comedy":
         result = 30000;
@@ -85,6 +81,14 @@ class PerformanceCalculator {
   }
 }
 
-class TragedyCalculator extends PerformanceCalculator {}
+class TragedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 40000;
+    if (this.performances.audience > 30) {
+      result += 1000 * (this.performances.audience - 30);
+    }
+    return result;
+  }
+}
 
 class ComedyCalculator extends PerformanceCalculator {}
