@@ -1,13 +1,10 @@
-import plays from "./plays.json";
-import invoices from "./invoices.json";
-
-function statement(invoice, plays) {
+export default function createStatementData(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
   statementData.totalAmount = totalAmount(statementData);
   statementData.totalVolumeCredits = totalVolumeCredits(statementData);
-  return renderPlainText(statementData, plays);
+  return statementData;
 
   function totalAmount(data) {
     return data.performances.reduce((total, pref) => total + pref.amount, 0);
@@ -63,26 +60,3 @@ function statement(invoice, plays) {
     return plays[aPerformance.playID];
   }
 }
-
-function renderPlainText(data) {
-  let result = `청구내역 (고객명: ${data.customer})\n`;
-
-  for (let perf of data.performances) {
-    // 청구 내역을 출력한다.
-    result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
-  }
-
-  result += `총액: ${usd(data.totalAmount)}\n`;
-  result += `적립 포인트: ${data.totalVolumeCredits}점\n`;
-  return result;
-
-  function usd(aNumber) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(aNumber / 100);
-  }
-}
-
-invoices.map((invoice) => console.log(statement(invoice, plays)));
