@@ -4,8 +4,13 @@ import invoices from "./invoices.json";
 function statement(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
-  statementData.performances = invoice.performances;
+  statementData.performances = invoice.performances.map(enrichPerformance);
   return renderPlainText(statementData, plays);
+}
+
+function enrichPerformance(aPerformance) {
+  const result = Object.assign({}, aPerformance); // 얕은 복사 수행 코드
+  return result;
 }
 
 function renderPlainText(data, plays) {
