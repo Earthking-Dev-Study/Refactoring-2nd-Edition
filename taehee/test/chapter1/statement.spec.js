@@ -1,8 +1,7 @@
 // const invoices = require("../../data/invoices.json");
 // const f = require("../../src/chapter1/statement.js");
 import invoices from "../../data/invoices.json";
-import f from "../../src/chapter1/statement.js";
-const statement = f.statement;
+import statement from "../../src/chapter1/statement.js";
 describe("play test", () => {
   test("statement method must have return value with string", () => {
     const result = statement(invoices[0]);
