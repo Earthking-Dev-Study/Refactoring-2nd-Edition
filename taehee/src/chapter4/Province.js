@@ -1,3 +1,5 @@
+import { Producer } from './Producer';
+
 class Province {
   constructor(doc) {
     this._name = doc.name;
@@ -90,3 +92,5 @@ function sampleProvinceData() {
     price: 20,
   };
 }
+
+export { Province, sampleProvinceData };
