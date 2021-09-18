@@ -50,7 +50,7 @@ class Province {
 
   // 생산 부족분 계산
   get shortfall() {
-    return this._demand - this.totalProduction;
+    return this._demand - this.totalProduction * 2;
   }
 
   // 수익 계산
