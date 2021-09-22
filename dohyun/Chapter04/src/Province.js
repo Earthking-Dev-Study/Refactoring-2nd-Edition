@@ -1,6 +1,6 @@
-import { Producer } from "./Producer";
+const { Producer } = require("./Producer");
 
-export class Province {
+class Province {
   constructor(doc) {
     this._name = doc.name;
     this._producers = [];
@@ -77,7 +77,7 @@ export class Province {
   }
 }
 
-export function sampleProvinceData() {
+function sampleProvinceData() {
   return {
     name: "Asia",
     producers: [
@@ -89,3 +89,8 @@ export function sampleProvinceData() {
     price: 20,
   };
 }
+
+module.exports = {
+  Province,
+  sampleProvinceData,
+};
