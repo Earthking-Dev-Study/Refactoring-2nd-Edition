@@ -211,6 +211,31 @@ function getRating(driver) {
 
 여러개의 라인을 인라인 할때는 한라인씩 하는게 좋다 그래야 실수가 없다.
 
+## 6-3
+
+### Before
+
+```javascript
+return order.quantity * order.itemPrice -
+      Math.max(0, order.quantity - 500) * order.itemPrice * 0.05 +
+      Math.min(order.quantity * order.itemPrice * 0.1, 100);
+```
+
+### After
+```javascript
+const basePrice = order.quantity * order.itemPrice;
+const quantityDiscount = Math.max(0, order.quantity - 500)
+                          * order.itemPrice * 0.05;
+const shipping = Math.min(basePrice * 0.1, 100);
+return basePrice - quantityDiscount + shipping;
+```
+
+표현식이 너무 복잡하여 이해하기 여러울때 지역 변수를 사용하여 표현식을 쪼개 관리하기 더 쉽게 만들 수 있다.
+
+이 과정에서 추가한 변수는 디버깅에도 도움이 된다. 디버거에 중단점을 지정하거나 상태를 출력하는 문장을 추가할 수 있기 때문이다.
+
+현재 함수 안에서만 변수의 이름이 의미가 있다면 변수로 추출하는것이 좋다. 그러나 함수를 벗어난 넓은 문맥에서까지의 의미가 있다면 그 넓은 범위에서 통용되는 이름을 생각해야하며 변수가 아닌 (주로) 함수로 추출해야 한다.
+
 
 ## 토론 해볼것
 
