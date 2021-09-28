@@ -236,6 +236,24 @@ return basePrice - quantityDiscount + shipping;
 
 현재 함수 안에서만 변수의 이름이 의미가 있다면 변수로 추출하는것이 좋다. 그러나 함수를 벗어난 넓은 문맥에서까지의 의미가 있다면 그 넓은 범위에서 통용되는 이름을 생각해야하며 변수가 아닌 (주로) 함수로 추출해야 한다.
 
+## 6-4 변수 인라인하기
+
+
+### Before
+
+```javascript
+let basePrice = anOrder.basePrice;
+return (basePrice > 100);
+```
+
+### After
+
+```javascript
+return anOrder.basePrice > 1000;
+```
+
+변수는 함수 안에서 표현식을 가리키는 이름으로 쓰이며, 대체로 긍정적인 효과를 준다. 하지만 그 이름이 원래 표현식과 다를 바 없을 때도 있다. 또 변수가 주변 코드를 리팩터링 하는데 방해가 되기도 한다.
+
 
 ## 토론 해볼것
 
