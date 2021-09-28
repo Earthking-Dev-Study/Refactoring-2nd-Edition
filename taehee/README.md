@@ -106,6 +106,7 @@
 
 ### 6-1 함수 추출하기
 
+### 함수 추출하기 대표 코드
 
 #### Before
 ```javascript
@@ -185,6 +186,31 @@ function hightlight() {
 만약 한개의 변수에 다른 값들을 많이 대입하게되면 코드를 보는사람에게 혼란을 줄수 있기때문이다.
 
 
+## 6-2 함수 인라인하기
+
+### Before
+```javascript
+function moreThanFiveLateDeliveries(driver) {
+    return driver.numberOfLateDeliveries > 5;
+}
+
+function getRating(driver) {
+    return moreThanFiveLateDeliveries(driver) ? 2 : 1;
+}
+```
+
+
+### After
+```javascript
+function getRating(driver) {
+    return (driver.numberOfLateDeliveries > 5) ? 2 : 1;
+}
+```
+
+> 목적이 분명히 드러나는 이름의 짤막한 함수를 이용하기를 권하지만 함수 본문이 이름만큼 명확한 경우도 있다. 이럴 때는 그 함수를 제거한다. 간접 호출은 유용할 수도 있지만 쓸데없는 간접 호출은 거슬린다.
+
+여러개의 라인을 인라인 할때는 한라인씩 하는게 좋다 그래야 실수가 없다.
+
 
 ## 토론 해볼것
 
@@ -253,6 +279,12 @@ function parent() {
 때로는 추출한 코드에서 값을 수정하는 지역 변수가 너무 많을 수 있다. 이럴 때는 함수 추출을 멈추고, 변수 쪼개기나 임시 변수를 질의 함수로 바꾸기와 같은 다른 리팩터링을 적용해서 변수를 사용하는 코드를 단순하게 바꿔본다. 그런 다음 함수 추출을 다시 시도한다.
 
 > 추출한 함수에서 부모함수에서의 변수를 많이 바꾼다는 말인지 헷갈린다.
+
+- 6-2 170쪽 철자 1
+
+서브클래스에서 오버라이드하는 메서드는 인라인하면 안 된다.
+
+> 이유를 추축해보면 좋을것같다. 오버라이드를 하여 사용할 함수를 인라인하고나서 없애버리면 오버라이드한 메서드를 사용하는곳에서 오류가 날것같다.
 
 ## 용어정리
 
