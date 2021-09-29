@@ -273,6 +273,209 @@ function circumference(radius) { ... }
 
 새로운 함수의 이름으로 기존의 코드를 바꾼후 이러한 작업이 끝나면 원래 함수를 삭제한다.
 
+## 6-6 변수 캡슐화하기
+
+### Before
+```javascript
+let defaultOwner = { firstName: '태희', lastName: '김' };
+```
+
+```javascript
+let defaultOwnerData=  {firstName: '태희', lastName: '김'}
+export function defaultOwner() { return defaultOwnerData;}
+export function setDefaultOwner(arg) { return defaultOwnerData = arg;}
+```
+
+데이터는 함수를 대체로 호출하는것처럼 할수 없고 전달함수로서 활용할수도 없기때문에 다루기가 까다롭다
+
+데이터는 참조하는 모든 부분을 한 번에 바꿔야 코드가 제대로 작동한다. 짧은 함수 안의 임시 변수처럼 유효범위가 아주 좁은 데이터는 어려울 게 없지만, 유효범위가 넓어질수록 다루기 어려워진다. 전역 데이터가 골칫거리인 이유도 바로 여기에 있다.
+
+접근할 수 있는 범위가 넓은 데이터를 옮길 때는 먼저 그 데이터로의 접근을 독점하는 함수를 만드는 식으로 캡슐화하는 것이 가장 좋은 방법일 때가 많다.
+
+데이터 재구성이라는 어려운 작업을 함수 재구성이라는 더 단순한 작업으로 변환하는 것이다.
+
+데이터 캡슐화는 데이터를 변경하고 사용하는 코드를 감시할 수 있는 확실한 통로가 되어주기 때문에 데이터 변경 전 검증이나 변경 후 추가 로직을 쉽게 끼워 넣을 수 있다.
+
+불변 데이터는 옮길 필요 없이 그냥 복제 하면된다. 원본데이터를 참조하는 코드를 변경할 필요도 없고, 데이터를 변형시키는 코드를 걱정할 일도 없다.
+
+> 나는 여기서 의문을 가졌다. 변수도 함수 선언 바꾸기처럼 우선 몇개만 바꿔놓고 차근차근 리팩토링을 할수있지않나? 라는 의문이 들었는데 어떠한 상황인지를 생각해보면 아래의 코드와 같다.
+
+```javascript
+let someValue = 3;
+
+// Logic A
+someValue += 1;
+
+// Logic B
+someValue += 3;
+
+console.log('someValue', someValue); // 7
+```
+
+위와 같이 someValue를 2개의 어떠한 로직에 의해 사용하고 있었는데 이 변수의 명을 `replaceValue`로 바꾸고 싶은 상황이 주어졌다고 가정하겠다.
+
+그런데 귀찮거나 어떠한 이유로 리팩토링을 `Logic A`만 했다고 했을때 과연 이것이 안전한 리팩토링인가? 에 대한 의문이 생긴다. 결과적으로는 **안전하지 않다**라는 결론이 나온다. 리팩토링 한 코드는 아래와 같다.
+
+```javascript
+let replaceValue = 3;
+let someValue = replaceValue;
+
+
+// Logic A
+replaceValue += 1;
+
+// Logic B
+someValue += 3;
+
+console.log('replaceValue', replaceValue); // 4
+console.log('someValue', someValue); // 6
+```
+
+결과를 보면 알겠지만 리팩토링을 진행했더니 정말 엉망인결과가 나왔다.
+
+근데 뭔가 어떻게든 될거같은 기분이 들었다. 그래서 C++의 포인터를 사용하면 됟지 않을까 싶어서 해보았는데
+
+
+
+```C++
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    
+    int someValue = 3;
+    
+    int *replaceValue = &someValue;
+    
+    // Logic A
+    *replaceValue+=1;
+    
+    // Logic B
+    someValue += 3;
+    
+    cout << "someValue " << someValue << '\n'; // 7
+    cout << "replaceValue " << *replaceValue << '\n'; // 7
+    
+    return 0;
+}
+```
+
+C++의 포인터를 사용하게되면 가능하게 된다. 자바스크립트에서도 이런게 있을지는 더 의논을 해봐야할거 같다. 
+
+## 6-7 변수 이름 바꾸기
+
+### Before
+
+```javascript
+let a = height * width;
+```
+
+### After
+
+```javascript
+let area = height * width;
+```
+
+토론 해볼것에 정리해둠
+
+## 6-8 매개변수 객체 만들기
+
+### Before
+```javascript
+function amountInvoiced(startDate, endDate) { ... }
+function amountReceived(startDate, endDate) { ... }
+function amountOverDue(startDate, endDate) { ... }
+```
+
+```javascript
+function amountInvoiced(aDateRange) { ... }
+function amountReceived(aDateRange) { ... }
+function amountOverDue(aDateRange) { ... }
+```
+
+데이터 뭉치를 데이터 구조로 묶으면 데이터 사이의 관계가 명확해진다는 이점을 얻는다.
+
+매개변수 수가 줄어들고 같은 데이터 구조를 사용하는 모든 함수가 원소를 참조할 때 항상 똑같은 이름을 사용하기 때문에 일관성도 높여준다.
+
+데이터 구조에 담길 데이터에 공통으로 적용되는 동작을 추출해서 함수로 만든다(공용 함수를 나열하는 식으로 작성할 수도 있고, 이 함수들과 데이터를 합쳐 클래스로 만들 수도 있다.)
+
+
+## 6-9 여러 함수를 클래스로 묶기
+
+### Before
+```javascript
+function base(aReading) { ... }
+function taxableCharge(aReading) { ... }
+function calculateBaseCharge(aReading) { ... }
+```
+
+### After
+```javascript
+class Reading {
+  base() { ... }
+  taxableCharge() { ... }
+  calculateBaseCharge() { ... }
+}
+```
+
+## 6-10 여러 함수를 변환 함수로 묶기
+
+### Before
+```javascript
+function base(aReading) { ... }
+function taxableCharge(aReading) { ... }
+```
+
+### After
+```javascript
+function enrichReading(argReading) {
+  const aREading = _.cloneDeep(argReading);
+  aREading.baseCharge = base(aREading);
+  aREading.taxableCharge = taxableCharge(aReading);
+  return aReading;
+}
+```
+
+여러함수를 클래스로 묶기(6.9절)와 여러 함수를 변환 함수로 묶는것에는 중요한 차이가 있는데,
+
+원본 데이터가 코드 안에서 갱신될 때는 클래스로 묶는 편이 훨씬 낫다. 변환 함수로 묶으면 가공한 데이터를 새로운 레코드에 저장하므로, 원본 데이터가 수정되면 일관성이 깨질 수 있기 때문이다.
+
+여러 함수를 한데 묶는 이유중 하나는 도출 로직이 중복되는 것을 피하기 위해서다. 이 로직을 함수로 추출 하는것만으로도 같은 효과를 볼 수 있지만, 데이터 구조와 이를 사용하는 함수가 근처에 있지 않으면 함수를 발견하기 어려울 때가 많다. 변환 함수로 묶으면 이런 함수들을 쉽게 찾아 쓸 수 있다.
+
+
+## 6-11 단계 쪼개기
+
+### Before
+
+```javascript
+const orderData = orderString.split(/\s+/);
+const productPrice = priceList[orderData[0].split("-")[1]];
+const orderPrice = parseInt(orderData[1]) * productPrice;
+```
+
+### After
+
+```javascript
+const orderRecord = parseOrder(order);
+const orderPrice = price(orderRecord, priceList);
+
+function parseOrder(aString) {
+  const values = aString.split(/\s+/);
+  return ({
+      productID: values[0].split("-")[1],
+      quantity: parseInt(values[1]),
+  });
+}
+
+function price(order, priceList) {
+  return order.quantity * priceList[order.productID];
+}
+```
+
+서로 다른 두 대상을 한꺼번에 다루는 코드를 발견하면 각각을 별개 모듈로 나누는 방법을 모색한다. 코드를 수정해야할때 두 대상을 동시에 생각핦 필요 없이 하나에만 집중하기 위해서이다.
+
 
 
 ## 토론 해볼것
@@ -352,6 +555,33 @@ function parent() {
 - 6-5 181쪽 맨 마지막 줄
 
 다형성을 구현한 클래스, 즉 상속 구조 속에 있는 클래스의 메서드를 변경할 때는 다형 관계인 다른 클래스들에도 변경이 반영되어야 한다. 이때, 상황이 복잡하기 때문에 간접 호출 방식으로 우회(혹은 중간단계로 활용)하는 방법도 쓰인다. 먼저 원하는 형태의 메서드를 새로 만들어서 원래 함수를 호출하는 전달 메서드로 활용하는 것이다. 단일 상속 구조라면 전달 메서드를 슈퍼클래스에 정의하면 해결된다. (Duck Typing 처럼) 슈퍼클래스와의 연결을 제공하지 않은 언어라면 전달 메서드를 모든 구현 클래스 각각에 추가해야한다.
+
+- 6-6 리드미 정리해놓은거에 토론거리 있음
+
+- 6-6 191쪽 맨 마지막에
+
+> 방금 본 기본 캡슐화 기법으로 데이터 구조로의 참조를 캡슐화 하면, 그 구조로의 접근이나 구조 자체를 다시 대입하는 행위는 제어할 수 있다. 하지만 필드 값을 변경하는 일은 제어할 수 없다. 기본 캡슐화 기법은 데이터 항목을 참조하는 부분만 캡슐화한다. 이게 밑에 테스트를 돌려보면 성공하는 테스트여서 그런것인가.. defaultOwner()로 값을 불러왔는데 둘이 동시에 값이 변해버린다. 이런면에서 각각을 개발자는 따로따로 생각하고싶은데 그러질 못하는 측면에서 제어할 수 없다고 하는것 같다.
+ 
+
+- 6-6 190쪽 4번 모든 참조를 수정했다면 변수의 가시 범위를 제한한다. 그러면 미처 발견하지 못한 참조가 없는지 확인할 수 있고~ 
+
+- 6-7 195쪽 절차 2
+다른 코드베이스에서 참조하는 변수는 외부에 공개된 변수이므로 이 리팩터링을 적용할 수 없다.
+
+- 6-7 196쪽 처음부분
+
+그런 다음 래핑 함수들을 인라인해서 모든 호출자가 변수에 직접 접근하게 하는 방법도 있지만 ~
+
+> 무슨말인지 모르겠다
+
+- 6-9 207쪽 처음
+
+파생 데이터 모두를 필요한 시점에 계산되게 만들었으니 저장된 데이터를 갱신하더라도 문제가 생길 일이 없다.
+
+> 파생 데이터가 rawReading을 말하는것이고 이것이 aReading.taxableCharge, aReading.baseCharge를 통해 계산되게 만들었다 이말인가? rawReading의 값이 변환되든 어차피 잘 계산되서?
+
+- 6-10 211쪽 마지막부분 모두
+
 
 ## 용어정리
 

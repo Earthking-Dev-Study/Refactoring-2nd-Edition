@@ -9,9 +9,4 @@ function printOwing(invoice) {
   for (const o of invoice.orders) {
     outstanding += o.amount;
   }
-
-  const today =
-
 }
-
-
