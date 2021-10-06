@@ -45,8 +45,19 @@ class Person {
 
 이렇게 항상 컬렉션을 소유한 클래스를 통해서만 원소를 변경하도록 하면 프로그램을 개선하면서 컬렉션 변경 방식도 원하는 대로 수정할 수 있다.
 
+## [7-3] 컬렉션 캡슐화하기
 
+### Before
+```javascript
+orders.filter(o => "high" === o.priority
+                || "rush" === o.priority)
+```
 
+### After
+
+```javascript
+orders.filter(o => o.priority.higherThan(new Priority("normal")));
+```
 
 
 
@@ -169,6 +180,8 @@ class Range {
 
 `cloneDeep`함수는 어떻게 클론하는지가 겉으로 보이지는 않는다 이걸말하는건가 ?
 
+
+### 255 [7-3] 더 가다듬기 토론
 
 
 
