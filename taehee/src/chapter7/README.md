@@ -59,7 +59,35 @@ orders.filter(o => "high" === o.priority
 orders.filter(o => o.priority.higherThan(new Priority("normal")));
 ```
 
+## [7-4] 임시 변수를 질의 함수로 바꾸기
 
+### Before
+```javascript
+const basePrice = this._quantity * this._itemPrice;
+if(basePrice > 1000) {
+  return basePrice * 0.95;
+else
+  return basePrice * 0.98;
+}
+```
+
+### After
+```javascript
+get basePrice() { this._quantity * this._itemPrice; }
+...
+if (this.basePrice > 1000)
+  return this.basePrice * 0.95;
+else
+  return this.basePrice * 0.98;
+```
+
+함수 안에서 어떤 코드의 결괏값을 뒤에서 다시 참조할 목적으로 임시 변수를 쓰기도 한다. 임시 변수를 사용하면 값을 계산하는 코드가 반복되는 걸 줄이고 (변수 이름을 통해) 값의 의미를 설명할 수도 있어서 유용하다. 그런데 한 걸은 더 나아가 아예 함수로 만들어 사용하는 편이 나을때가 많다.
+
+긴 함수의 한 부분을 별도 함수로 추출하고자 할 때 먼저 변수들을 각각의 함수로 만들면 일이 수월해진다. 추출한 함수에 변수를 따로 전달할 필요가 없어지기 때문이다. 또한 이 덕분에 추출한 함수와 원래 함수의 경계가 더 분명해지기도 하는데, 그러면 부자연스러운 의존 관계나 부수효과를 찾고 제거하는 데 도움이 된다.
+
+변수 대신 함수로 만들어두면 비슷한 계산을 수행하는 다른 함수에서도 사용할 수 있어 코드 중복이 줄어든다.
+
+이번 리팩토링은 클래스 안에서 적용할 때 효과가 가장 크다. 클래스는 추출할 메서드들에 공유 컨텍스트를 제공하기 때문이다.
 
 ## 7장 토론
 
