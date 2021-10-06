@@ -158,6 +158,24 @@ class Person {
 
 클래스를 인라인해서 하나로 합친 다음 새로운 클래스를 추출하는게 쉬울 수도 있기 때문이다.
 
+## [7-7] 위임 숨기기
+
+### Before
+```javascript
+manager = aPerson.department.manager;
+```
+
+### After
+```javascript
+manager = aPerson.manager;
+
+class Person {
+  get manager() { return this.department.manager; }
+}
+```
+
+
+
 ## 7장 토론
 
 ### 236쪽 아래부분 [7-1] 레코드 캡슐화하기
