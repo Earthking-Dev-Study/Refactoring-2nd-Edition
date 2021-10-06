@@ -89,6 +89,40 @@ else
 
 이번 리팩토링은 클래스 안에서 적용할 때 효과가 가장 크다. 클래스는 추출할 메서드들에 공유 컨텍스트를 제공하기 때문이다.
 
+## [7-5] 클래스 추출하기
+
+### Before
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._officeAreaCode; }
+  get officeNumber() { return this._officeNumber; }
+}
+```
+
+### After
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._telephoneNumber.areaCode; }
+  get officeNumber() { return this._telephoneNumber.number; }
+}
+
+class TelephoneNumber {
+  get areaCode() { return this._areaCode; }
+  get number() { return this._number; }
+}
+```
+
+일부 데이터와 메서드를 따로 묶을 수 있다면 어서 분리하라는 신호이다.
+
+함께 변경되는 일이 많거나 서로 의존하는 데이터들도 분리한다.
+
+특정 데이터나 메서드 일부를 제거하면 어떤 일이 일어나는지 자문해보면 판단에 도움이 된다.
+
+제거해도 다른 필드나 메서드 들이 논리적으로 문제가 없다면 분리할 수 있다는 뜻이다.
+
+
 ## 7장 토론
 
 ### 236쪽 아래부분 [7-1] 레코드 캡슐화하기
