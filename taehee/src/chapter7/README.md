@@ -98,3 +98,8 @@ class Range {
 
 이렇게 length를 renameLength로 이름을 변경할때도 한번에 모두 바꾸지 않고 점진적으로 renameLength로 이름을 바꿀수 있다.
 
+
+### 243 프록시 연습문제 중간 ~ 끝
+
+> 데이터 구조의 읽기전용 프락시를 반환하는 방법도 있다. 클라이언트에서 내부 객체를 수정하려면 프락시가 예외를 던지도록 하는 것이다. ...(중략) 그래서 독자에게 연습문제로 남겨 두겠다. 또한 복제본을 만들고 이를 재귀적으로 동결([freeze](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze))해서 쓰기 동작을 감지하는 방법도 있다.
+
