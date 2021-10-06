@@ -194,7 +194,35 @@ manager = aPerson.department.manager;
 
 > 데메테르 법칙: 영어식 발음을 써서 '디미터의 법칙'이라고도 하며, 또 다른 이름은 `최소 지식 원칙(principle of least knowledge)`이다. 내부 정보를 가능한 한 숨기고 밀접한 모듈과만 상호작용하여 결합도를 낮추자는 원칙응로, 자칫하면 이 과정에서 위임 혹은 래퍼(wrapper)메서드가 너무 늘어나는 등의 부작용이 있을 수 있으니 상황에 맞게 응용하는게 좋다.
  
+## [7-9] 알고리즘 교체하기
 
+### Before
+
+```javascript
+function foundPerson(people) {
+  for (let i = 0; i < people.length; i++) {
+    if(people[i] === 'Don') {
+      return 'Don';
+    }
+    if(people[i] === 'John') {
+      return 'John';
+    }
+    if(people[i] === 'Kent') {
+      return 'Kent';
+    }
+  }
+  return "";
+}
+```
+
+### After
+
+```javascript
+function foundPerson(people) {
+  const candidates = ["Don", "John", "Kent"];
+  return people.find(p => candidates.includes(p)) || '';
+}
+```
 
 ## 7장 토론
 
