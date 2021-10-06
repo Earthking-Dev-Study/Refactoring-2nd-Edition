@@ -1,4 +1,4 @@
-## 레코드 캡슐화하기 (Encapsulate Record)
+## [7-1] 레코드 캡슐화하기 (Encapsulate Record)
 
 ### Before
 
@@ -21,6 +21,32 @@ class Organization {
   set country(arg) { this._country = arg; }
 }
 ```
+
+## [7-2] 컬렉션 캡슐화하기
+
+### Before
+```javascript
+class Person {
+  get course() { return this._courses; }
+  set courses(aList) { this._courses = aList; }
+}
+```
+
+### After
+```javascript
+class Person {
+  get course() { return this._courses.slice(); }
+  addCourse(aCourse) { ... }
+  removeCourse(aCourse) { ... }
+}
+```
+
+컬렉션 변수로의 접근을 캡슐화하면서 게터가 컬렉션 자체를 반환하도록 한다면, 그 컬렉션을 감싼 클래스가 눈치채지 못하는 상태에서 컬렉션의 원소들이 바뀌어버릴 수 있다. 이러한 문제를 방지하기 위해 컬렉션을 감싼 클래스에 흔히 `add()`와 `remove()`라는 컬렉션 변경자 메서드를 만들고 `getter`에는 컬렉션을 `slice()`하여 반환해준다.
+
+이렇게 항상 컬렉션을 소유한 클래스를 통해서만 원소를 변경하도록 하면 프로그램을 개선하면서 컬렉션 변경 방식도 원하는 대로 수정할 수 있다.
+
+
+
 
 
 
@@ -99,11 +125,11 @@ class Range {
 이렇게 length를 renameLength로 이름을 변경할때도 한번에 모두 바꾸지 않고 점진적으로 renameLength로 이름을 바꿀수 있다.
 
 
-### 243 프록시 연습문제 중간 ~ 끝
+### 243 프록시 [7-1] 연습문제 중간 ~ 끝
 
 > 데이터 구조의 읽기전용 프락시를 반환하는 방법도 있다. 클라이언트에서 내부 객체를 수정하려면 프락시가 예외를 던지도록 하는 것이다. ...(중략) 그래서 독자에게 연습문제로 남겨 두겠다. 또한 복제본을 만들고 이를 재귀적으로 동결([freeze](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze))해서 쓰기 동작을 감지하는 방법도 있다.
 
-### 244 처음부분
+### 244 [7-1] 처음부분
 
 > 이 방법의 가장 큰 장점은 customerData의 모든 쓰임을 명시적인 API로 제공한다는 것이다. 이 클래스만 보면 데이터 사용 방법을 모두 파악할 수 있다. 하지만 읽는 패턴이 다양하면 그만큼 작성할 코드가 늘어난다.
 
@@ -111,14 +137,44 @@ class Range {
 
 저렇게 제공하는 getter가 많아지면 좋기야좋은데 나중에 엄청많아지면 그건 또 그거대로 문제다.
 
-### 244 마지막부분
+### 244 [7-1] 마지막부분
 
 > 바로 눈에 띄는 문제는 데이터 구조가 클수록 복제 비용이 커져서 성능이 느려질 수 있다는 것이다.
 
 복제하려는 데이터의 Deep이 높을수록 비용은 더 많이 들수밖에없는데 무조건 `get rawData`는 무조건 cloneDeep한 객체를 반환해주고있다.
 
-### 245 처음부분
+### 245 [7-1] 처음부분
 
 > 클라이언트가 원본을 수정한다고 착각할 수 있는데 이럴때는 읽기전용 프락시를 제공하거나 복제본을 동결시켜서 데이터를 수정하려 할 때 에러를 던지도록 만들 수 있다.
 
+이런경우도 있구나..
 
+### 247 [7-2] 처음~중간
+
+> 내부 컬렉션을 직접 수정하지 못하게 하는 방법중 하나로, 절대로 컬렉션 값을 반환하지 않게 할 수 있다. 컬렉션에 접근하려면 컬렉션이 소속된 클래스의 적절한 메서드를 반드시 거치게 하는것이다. 예컨대 aCustomer.orders.size()처럼 접근하는 코드를 aCustomer.numberOfOrders()로 바꾸는 것이다. 나는 이 방식에 동의하지 않는다. 최신 언어는 다양한 컬렉션 클래스들을 표준화된 인터페이스로 제공하며, 컬렉션 파이프라인(Collection Pipeline)과 같은 패턴을 적용하여 다채롭게 조합할 수 있다. 표준 인터페이스 대신 전용 메서들을 사용하게 하면 부가적인 코드가 상당히 늘어나며 컬렉션 연산들을 조합해 쓰기도 어려워진다.
+
+- [Martin Fowler Collection Pipe](https://martinfowler.com/articles/collection-pipeline/)
+
+- [About Collection Pipe](https://greedy0110.tistory.com/55)
+
+우리는 컬렉션 파이프 `filter`, `reduce`, `map`들을 이용하여 컬렉션을 다양하게 조작할수 있다.
+
+하지만 저렇게 우리가 정의한 메서드(aCustomer.numberOfOrders())를 사용하면 Pipe를 사용할수 없다.
+
+### 247 [7-2] 끝부분
+
+> 한편, 프락시 방식에서는 원본 데이터를 수정하는 과정이 겉으로 드러나지만 복제 방식에서는 그렇지 않다는 차이도 있다.
+ 
+내가만든 `chapter7/proxy.js`를 보면 데이터를 수정하는 Set부분의 내용이 겉으로 다 드러나는데
+
+`cloneDeep`함수는 어떻게 클론하는지가 겉으로 보이지는 않는다 이걸말하는건가 ?
+
+
+
+
+
+## 용어
+
+### Collection Pipes
+
+> Collection pipelines are a programming pattern where you organize some computation as a sequence of operations which compose by taking a collection as output of one operation and feeding it into the next. (Common operations are filter, map, and reduce.) This pattern is common in functional programming, and also in object-oriented languages which have lambdas. This article describes the pattern with several examples of how to form pipelines, both to introduce the pattern to those unfamiliar with it, and to help people understand the core concepts so they can more easily take ideas from one language to another.
