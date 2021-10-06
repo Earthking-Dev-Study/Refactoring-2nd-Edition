@@ -78,4 +78,23 @@ class Range {
 
 이렇게 start와 end만 알면 length또한 자동적으로 알수있다.
 
+### 237 윗 부분 [7-1] 레코드 캡슐화하기
+
+> 캡슐화하면 이름을 바꿀때도 좋다. 필드 이름을 바꿔도 기존 이름과 새 이름 모두를 각각의 메서드로 제공할 수 있다.
+ 
+```javascript
+class Range {
+  // 위의 내용과 동일
+  
+  get length() {
+    return end - start;
+  }
+  
+  get renameLength() {
+    return end - start;
+  }
+}
+``` 
+
+이렇게 length를 renameLength로 이름을 변경할때도 한번에 모두 바꾸지 않고 점진적으로 renameLength로 이름을 바꿀수 있다.
 
