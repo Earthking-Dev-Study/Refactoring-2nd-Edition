@@ -122,6 +122,41 @@ class TelephoneNumber {
 
 제거해도 다른 필드나 메서드 들이 논리적으로 문제가 없다면 분리할 수 있다는 뜻이다.
 
+## [7-6] 클래스 인라인하기
+
+### Before
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._telephoneNumber.areaCode; }
+  get officeNumber() { return this._telephoneNumber.number; }
+}
+
+class TelephoneNumber {
+  get areaCode() { return this._areaCode; }
+  get number() { return this._number; }
+}
+```
+
+### After
+```javascript
+class Person {
+  get officeAreaCode() { return this._officeAreaCode; }
+  get officeNumber() { return this._officeNumber; }
+}
+```
+
+1. 쿨랴수 츄츌허가룰 거꾸로 돌리는 리팩터링이다.
+
+더 이상 제 역할을 못해서 그대로 두면 안되는 클래스는 인라인 해버린다.
+
+역할을 옮기는 리팩터링을 하고나니 특정 클래스에 남은 역할이 거의 없을 때 이런 현상이 자주 생긴다.
+
+이럴 땐 이 불쌍한 클래스를 가장 많이 사용하는 클래스로 흡수시키자.
+
+1. 두 클래스의 기능을 지금과 다르게 배분하고 싶을 때도 클래스를 인라인한다.
+
+클래스를 인라인해서 하나로 합친 다음 새로운 클래스를 추출하는게 쉬울 수도 있기 때문이다.
 
 ## 7장 토론
 
