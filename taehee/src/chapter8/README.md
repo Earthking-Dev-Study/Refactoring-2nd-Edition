@@ -118,3 +118,26 @@ for (const s of states) {
 appliesToMass = states.includes("MA");
 ```
 
+## [8-6] 문장 슬라이드하기
+
+### Before 
+```javascript
+const pricingPlan = retrievePricingPlan();
+const order = retreiverOrder();
+let charge;
+const chargePerUnit = pricingPlan.unit;
+```
+
+### After
+
+```javascript
+const pricingPlan = retrievePricingPlan();
+const chargePerUnit = pricingPlan.unit;
+const order = retreiveOrder();
+let charge;
+```
+
+관련된 코드들이 가까이 모여 있다면 이해하기가 더 쉽다. 예컨대 하나의 데이터 구조를 이용하는 문장들은 (다른 데이터를 이용하는 코드 사이에 흩어져 있기보다는 ) 한데 모여 있어야 좋다.
+
+코드 조각을 슬라이드할 때는 무엇을 슬라이드할지와 슬라이드할수있는지 여부 이 두개를 고려해야한다.
+
