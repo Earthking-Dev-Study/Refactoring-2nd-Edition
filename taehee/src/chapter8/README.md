@@ -74,3 +74,31 @@ function photoData(aPhoto) {
   ]
 }
 ```
+
+## [8-4] 문장을 호출한 곳으로 옮기기
+
+### Before
+
+```javascript
+emitPhotoData(outStream, person.photo);
+function emitPhotoData(outStream, photo) {
+  outStream.write(`<p>제목: ${photo.title}</p>\n`);
+  outStream.write(`<p>위치: ${photo.location}</p>\n`);
+}
+```
+
+### After
+```javascript
+emitPhotoData(outStream, person.photo);
+outStream.write(`<p>위치: ${person.photo.location}</p>\n`);
+
+function emitPhotoData(outStream, photo) {
+  outStream.write(`<p>제목: ${photo.title}</p>\n`);
+}
+```
+
+함수는 프로그래머가 쌓아 올리는 추상화의 기본 빌딩 블록이다.
+
+함수가 초기에는 응집도 높고 한 가지 일만 수행하다가 갑자기 둘 이상의 다른 일을 수행 해버리면 문제가 될 여지가 많다.
+
+이러한 일은 여러 곳에서 사용하던 기능이 일부 호출자에게는 다르게 동작하도록 바뀌어야 할때 발생한다.
