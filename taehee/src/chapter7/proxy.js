@@ -1,11 +1,25 @@
+import _ from 'lodash';
+
 const person = new Proxy(
-  {},
+  { name: 'test' },
   {
-    set: function (obj, prop, value) {
-      console.log(obj, prop, value);
-      return false;
+    get: function (obj, prop) {
+      return _.cloneDeep(obj[prop]);
     },
   }
 );
 
-person.name = 'taehee';
+const test = person;
+test.name = 'gogo';
+console.log(person);
+console.log(test);
+
+const nameTest = {
+  name: 'test',
+};
+
+const clone = _.cloneDeep(nameTest);
+
+clone.name = 'dohyun';
+console.log(clone);
+console.log(nameTest);
