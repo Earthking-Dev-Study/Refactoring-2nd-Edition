@@ -102,3 +102,19 @@ function emitPhotoData(outStream, photo) {
 함수가 초기에는 응집도 높고 한 가지 일만 수행하다가 갑자기 둘 이상의 다른 일을 수행 해버리면 문제가 될 여지가 많다.
 
 이러한 일은 여러 곳에서 사용하던 기능이 일부 호출자에게는 다르게 동작하도록 바뀌어야 할때 발생한다.
+
+## [8-5] 인라인 코드를 함수 호출로 바꾸기
+
+### Before
+
+```javascript
+let appliesToMass = false;
+for (const s of states) {
+  if (s === 'MA') appliesToMass = true;
+}
+```
+
+```javascript
+appliesToMass = states.includes("MA");
+```
+
