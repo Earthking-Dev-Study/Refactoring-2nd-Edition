@@ -188,3 +188,17 @@ const names = input
                 .map(i => i.name);
 ```
 
+## [8-9] 죽은 코드 제거하기
+
+### Before
+```javascript
+if (false) {
+  doSomethingTathUsedToMatter();
+}
+```
+
+### After
+
+```javascript
+// Remove Above Code
+```
