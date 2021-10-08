@@ -141,3 +141,31 @@ let charge;
 
 코드 조각을 슬라이드할 때는 무엇을 슬라이드할지와 슬라이드할수있는지 여부 이 두개를 고려해야한다.
 
+## [8-7] 반복문 쪼개기
+
+### Before
+
+```javascript
+let averageAge = 0;
+let totalSalary = 0;
+for (const p of people) {
+  averageAge += p.age;
+  totalSalary += p.salary;
+}
+averageAge = averageAge / people.length;
+```
+
+### After
+
+```javascript
+let totalSalary = 0;
+for (const p of people) {
+  totalSalary += p.salary;
+}
+
+let averageAge = 0;
+for (const p of people) {
+  averageAge += p.age;
+}
+averageAge = averageAge / people.length;
+```
