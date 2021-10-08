@@ -29,3 +29,20 @@ class AccountType {
 예컨데 다른 함수 안에서 도우미 역할로 정의된 함수 중 독립적으로도 고유한 가치가 있는 것은 접근하기 더 쉬운 장소로 옮기는 게 낫다.
 
 함수를 옮길지 말지를 결정하는건 쉽지 않다. 그럴 땐 대상 함수의 현재 컨텍스트와 후보 컨텍스트를 둘러보면 도움이 된다. 대상 함수를 호출하는 함수들은 무엇인지, 대상 함수가 호출하는 함수들은 또 무엇이 있는지, 대상 함수가 사용하는 데이터는 무엇인지를 살펴봐야 한다.
+
+## [8-2] 필드 옮기기
+
+### Before
+
+```javascript
+class Customer {
+  get plan() { return this._discountRate; }
+}
+```
+
+```javascript
+class Customer {
+  get plan() { return this._plan; }
+  get discountRate() { return this._plan.discountRate; }
+}
+```
