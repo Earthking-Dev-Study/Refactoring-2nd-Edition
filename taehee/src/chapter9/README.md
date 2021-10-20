@@ -96,3 +96,38 @@ it('telephone equals', () => {
   assert(new TelephoneNumber("123", "123-123").equals(TelephoneNumber("123", "123-123")))
 }); 
 ```
+
+## [9-5] 값을 참조로 바꾸기
+
+### Before
+```javascript
+let customer = new Customer(customerData);
+```
+
+### After
+```javascript
+let customer = customerRepository.get(customerData.id);
+```
+
+항상 물리적으로 똑같은 고객 객체를 사용하고 싶다면 먼저 이 유일한 객체를 저장해둘 곳이 있어야 한다. 객체를 어디에 저장해야 할지는 애플리케이션에 따라 다르겠지만, 간단한 상황이라면 나는 저장소 객체(Repository Object)를 사용하는 편이다.
+
+```javascript
+let _repositoryData;
+
+export function initialize() {
+  _repositoryData = {};
+  _repositoryData.customers = new Map();
+}
+
+export function registerCustomer(id) {
+  if (! _repositoryData.customers.has(id)) _repositoryData.customers.set(id, new Customer(id));
+  return findCustomer(id);
+}
+
+export function findCustomer(id) {
+  return _repositoryData.customers.get(id);
+}
+```
+
+
+
