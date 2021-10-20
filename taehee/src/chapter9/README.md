@@ -64,4 +64,35 @@ get discountedTotal() { return this._baseTotal - this._discount; }
 set discount(aNumber) { this._discount = aNumber; }
 ```
 
+## [9-4] 참조를 값으로 바꾸기
 
+### Before
+
+```javascript
+class Product { 
+  applyDiscount(arg) { this._price.amount -= arg; }
+}
+```
+
+```javascript
+class Product {
+  applyDiscount(arg) {
+    this._price = new Money(this._price.amount - arg, this._price.currency);
+  }
+}
+```
+
+#### equals 함수
+```javascript
+equals(other) {
+  if (!(other instanceof TelephoneNumber)) return false;
+  return this.areaCode === other.areaCode && this.number === other.number;
+}
+```
+
+#### 테스팅
+```javascript
+it('telephone equals', () => {
+  assert(new TelephoneNumber("123", "123-123").equals(TelephoneNumber("123", "123-123")))
+}); 
+```
