@@ -129,5 +129,21 @@ export function findCustomer(id) {
 }
 ```
 
+## [9-6] 매직 리터럴 바꾸기
+
+### Before
+```javascript
+function potentialEnergy(maxx, height) {
+  return mass * 9.81 * height;
+}
+```
+
+### After
+```javascript
+const STANDARD_GRAVITY = 9.81;
+function potentialEnergy(mass, height) {
+  return mass * STANDARD_GRAVITY * height;
+}
+```
 
 
