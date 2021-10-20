@@ -43,3 +43,25 @@ this._title = (data.title !== undefined) ? data.title : data.name
 ```
 
 불변 데이터 구조가 널리 쓰이게 된 이유가 이러한 리팩토링을 할때 만약 리팩토링할게 많다면 그만큼 변경해야하는것도 많아진다 이 과정중에 실수가 일어날수 있으므로 이러한 이유도 한몫한다.
+
+## [9-3] 파생 변수를 질의 함수로 바꾸기
+
+### Before
+```javascript
+get discountedTotal() { return this._discountedTotal; }
+set discount(aNumber) {
+  const old = this._discount;
+  this._discount = aNumber;
+  this._discountedTotal += old - aNumber;
+}
+```
+
+### After
+
+```javascript
+get discountedTotal() { return this._baseTotal - this._discount; }
+
+set discount(aNumber) { this._discount = aNumber; }
+```
+
+
