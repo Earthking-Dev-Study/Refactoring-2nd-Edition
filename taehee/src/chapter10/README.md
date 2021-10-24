@@ -38,3 +38,31 @@ function isNotEligibleForDisability() {
 }
 ```
 
+## [10-3] 중첩 조건문을 보호 구문으로 바꾸기
+
+### Before
+
+```javascript
+function getPayAmount() {
+  let result;
+  if (isDead) {
+    result = deadAmount();
+  }else {
+    if (iesSeparated)
+      result = separatedAmount();
+    else
+      result = normalPayAmount();
+  }
+}
+```
+
+### After
+
+```javascript
+function getPayAmount() {
+  if (isDead) return deadAmount();
+  if (isSeparated) return separatedAmount();
+  if (isRetired) return retiredAmount();
+  return normalPayAmount();
+}
+```
