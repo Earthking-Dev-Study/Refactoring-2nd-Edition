@@ -137,3 +137,29 @@ assert(this.discountRate >= 0);
 if (this.discountRate)
   base = base - (this.discountRate * base);
 ```
+
+## [10-7] 제어 플래그를 탈출문으로 바꾸기
+
+### Before
+
+```javascript
+for (const p of people) {
+  if (!founc) {
+    if (p === '조커') {
+      sendAlert();
+      found = true;
+    }
+  }
+}
+```
+
+### After
+
+```javascript
+for (const p of people) {
+  if (p === '조커') {
+    sendAlert();
+    break;
+  }
+}
+```
