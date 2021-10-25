@@ -121,3 +121,19 @@ class UnknownCustomer {
 }
 ```
 
+## [10-6] 어서션 추가하기
+
+### Before
+
+```javascript
+if (this.discountRate)
+  base = base - (this.discountRate * base);
+```
+
+### After
+
+```javascript
+assert(this.discountRate >= 0);
+if (this.discountRate)
+  base = base - (this.discountRate * base);
+```
