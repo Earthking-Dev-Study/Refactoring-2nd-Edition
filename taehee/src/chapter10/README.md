@@ -104,3 +104,20 @@ class NorwegianBlueParror {
   }
 }
 ```
+
+## [10-5] 특이 케이스 추가하기
+
+### Before
+
+```javascript
+if (aCustomer === '미확인 고객') customerName = '거주자';
+```
+
+### After
+
+```javascript
+class UnknownCustomer {
+  get name() { return "거주자"; }
+}
+```
+
