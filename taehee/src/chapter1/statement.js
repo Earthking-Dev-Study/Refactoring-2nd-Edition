@@ -1,5 +1,3 @@
-import plays from "../../data/plays.json";
-// const plays = require("../../data/plays.json");
 import createStatementData from "./createStatementData";
 
 function usd(anumber) {
@@ -27,6 +25,4 @@ function statement(invoice) {
   return renderPlainText(createStatementData(invoice));
 }
 
-module.exports = {
-  statement,
-};
+export default statement;

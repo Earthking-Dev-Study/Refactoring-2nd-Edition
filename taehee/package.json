@@ -1,0 +1,24 @@
+{
+  "name": "taehee",
+  "version": "1.0.0",
+  "description": "1. **반복문 쪼개기**(8.7절)로 변수 값을 누적시키는 부분을 분리한다. 1. **문장 슬라이드하기**(8.6절)로 변수 초기화 문장을 변수 값 누적 코드 바로 앞으로 옮긴다. 1. **함수 추출하기**(6.1절)로 적립 포인트 계산 부분을 별도 함수로 추출한다. 1. **변수 인라인하기**(6.4절)로 volumeCredits 변수를 제거한다.",
+  "main": "jest.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "^7.15.6",
+    "jest": "^27.2.0",
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.21",
+    "mocha": "^9.1.1",
+    "prettier": "^2.4.1"
+  }
+}
