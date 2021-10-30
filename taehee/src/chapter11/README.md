@@ -132,3 +132,22 @@ function targetTemperature(aPlan, currentTemperature) {
   // 생략
 }
 ```
+
+## [11-7] 세터 제거하기
+
+### Before
+
+```javascript
+class Person {
+  get name() { ... }
+  set name(aString) { ... }
+}
+```
+
+### After
+
+```javascript
+class Person {
+  get name() { ... }
+}
+```
