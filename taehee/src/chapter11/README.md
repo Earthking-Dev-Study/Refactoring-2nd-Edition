@@ -193,3 +193,28 @@ class Scorer {
   }
 }
 ```
+
+## [11-10] 명령을 함수로 바꾸기
+
+### Before
+
+```javascript
+class ChargeCalculator {
+  constructor(customer, usage) {
+    this._customer = customer;
+    this._usage = usage;
+  }
+  
+  execute() {
+    return this._customer.rate * this._usage;
+  }
+}
+```
+
+### After
+
+```javascript
+function charge(customer, usage) {
+  return customer.rate * usage;
+}
+```
