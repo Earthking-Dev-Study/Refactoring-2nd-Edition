@@ -86,3 +86,26 @@ if (aPlan.withinRange(low, hight))
 ```javascript
 if (aPlan.withinRange(aRoom.daysTempRange))
 ```
+
+## [11-5] 매개변수를 질의 함수로 바꾸기
+
+### Before
+
+```javascript
+availableVacation(anEmployee, anEmployee.grade);
+
+function availableVacation(anEmployee, grade) {
+  // 연휴 계산 ...
+}
+```
+
+### After
+
+```javascript
+availableVacation(anEmployee)
+
+function availableVacation(anEmployee) {
+  const grade = anEmployee.grade;
+  // 연휴 계산...
+}
+```
