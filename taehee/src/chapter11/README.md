@@ -71,3 +71,18 @@ function setWidth (value) { this._width = value; }
 
 > 플래그 인수(flag argument)란 호출되는 함수가 실행할 로직을 호출하는 쪽에서 선택하기 위해 전달 하는 인수다.
 
+## [11-4] 객체 통째로 넘기기
+
+### Before
+
+```javascript
+const low = aRoom.daysTempRange.low;
+const high = aRoom.daysTempRange.high;
+if (aPlan.withinRange(low, hight))
+```
+
+### After
+
+```javascript
+if (aPlan.withinRange(aRoom.daysTempRange))
+```
