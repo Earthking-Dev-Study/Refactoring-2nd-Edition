@@ -21,3 +21,26 @@ function sendBill() {
     emailGateway.send(formatBill(customer));
 }
 ```
+
+## [11-2] 함수 매개변수화하기
+
+### Before
+
+```javascript
+function tenPercentRaise(aPerson) {
+  aPerson.salary = aPerson.salary.multiply(1.1);
+}
+
+function fivePercentRaise(aPerson) {
+    aPerson.salary = aPerson.multiply(1.05);
+}
+```
+
+### After
+
+```shell
+function raise(aPerson, factor) {
+    aPerson.salary = aPerson.salary.multiply(1 + factor);
+}
+```
+
