@@ -38,9 +38,36 @@ function fivePercentRaise(aPerson) {
 
 ### After
 
-```shell
+```javascript
 function raise(aPerson, factor) {
     aPerson.salary = aPerson.salary.multiply(1 + factor);
 }
 ```
+
+## [11-3] 플래그 인수 제거하기
+
+### Before
+
+```javascript
+function setDimension(name, value) {
+  if (name === 'height') {
+    this._height = value;
+    return;
+  }
+  if (name === 'width') {
+    this._width = value;
+    return;
+  }
+}
+```
+
+### After
+
+```javascript
+function setHeight(value) { this._height = value; }
+
+function setWidth (value) { this._width = value; }
+```
+
+> 플래그 인수(flag argument)란 호출되는 함수가 실행할 로직을 호출하는 쪽에서 선택하기 위해 전달 하는 인수다.
 
