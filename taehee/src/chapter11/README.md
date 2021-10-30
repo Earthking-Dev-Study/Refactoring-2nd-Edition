@@ -151,3 +151,16 @@ class Person {
   get name() { ... }
 }
 ```
+
+## 생성자를 팩터리 함수로 바꾸기
+
+### Before
+```javascript
+leadEngineer = new Employee(document.leadEngineer, 'E');
+```
+
+### After
+
+```javascript
+leadEngineer = createEngineer(document.leadeEngineer);
+```
