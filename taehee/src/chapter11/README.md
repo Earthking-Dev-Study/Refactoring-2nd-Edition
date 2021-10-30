@@ -109,3 +109,26 @@ function availableVacation(anEmployee) {
   // 연휴 계산...
 }
 ```
+
+## [11-6] 질의 함수를 매개변수로 바꾸기
+
+### Before
+
+```javascript
+targetTemperature(aPlan)
+
+function targetTemperature(aPlan) {
+  currentTemperature = thermostat.currentTemperature;
+  // 생략
+}
+```
+
+### After
+
+```javascript
+targetTemperature(aPlan, thermostat.currentTemperature)
+
+function targetTemperature(aPlan, currentTemperature) {
+  // 생략
+}
+```
