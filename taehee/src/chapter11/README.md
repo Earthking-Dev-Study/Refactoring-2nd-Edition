@@ -250,3 +250,24 @@ function calculateAscent() {
   return result;
 }
 ```
+
+## [11-12] 오류 코드를 예외로 바꾸기
+
+### Before
+
+```javascript
+if (data)
+  return new ShippingRules(data);
+else
+  return -23;
+```
+
+### After
+
+```javascript
+if (data)
+  return new ShippingRules(data);
+else
+  throw new OrderProcessingError(-23);
+```
+
