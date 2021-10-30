@@ -152,7 +152,7 @@ class Person {
 }
 ```
 
-## 생성자를 팩터리 함수로 바꾸기
+## [11-8] 생성자를 팩터리 함수로 바꾸기
 
 ### Before
 ```javascript
@@ -163,4 +163,33 @@ leadEngineer = new Employee(document.leadEngineer, 'E');
 
 ```javascript
 leadEngineer = createEngineer(document.leadeEngineer);
+```
+
+## [11-9] 함수를 명령으로 바꾸기
+
+### Before
+
+```javascript
+function score(candidate, medicalExam, scoringGuide) {
+  let result = 0;
+  let healthLevel = 0;
+}
+```
+
+### After
+
+```javascript
+class Scorer {
+  constructor(candidate, medicalExam, scoringGuide) {
+    this._candidate = candidate;
+    this._medicalExam = medicalExam;
+    this._scoringGuide = scoringGuide;
+  }
+  
+  execute() {
+    this._result = 0;
+    this._helathLevel = 0;
+    // 긴 코드 생략
+  }
+}
 ```
