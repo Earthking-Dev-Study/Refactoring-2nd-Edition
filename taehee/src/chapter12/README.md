@@ -94,3 +94,26 @@ class Employee extends Party {
 }
 ```
 
+## [12-4] 메서드 내리기
+
+### Before
+```typescript
+class Employee {
+  get quota { ... }
+}
+
+class Engineer extends Employee { ... }
+class Salesperson extends Employee { ... }
+```
+
+### After
+
+```typescript
+class Employee { ... }
+
+class Engineer extends Employee { ... }
+class Salesperson extends Employee { 
+  get quota { ... }
+}
+```
+
