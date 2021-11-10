@@ -35,3 +35,6 @@
 | Week8(21.10.20 ~ 10.27)  | 21.10.27 | Chapter10  |
 | Week9(21.10.27 ~ 11.03)  | 21.11.03 | Chapter11  |
 | Week10(21.11.03 ~ 11.10) | 21.11.10 | Chapter12  |
+
+## 회고록
+- [Refactoring 2nd Edition 스터디를 마치고..](https://medium.com/@godtaehee/refactoring-2nd-edition-%EC%8A%A4%ED%84%B0%EB%94%94%EB%A5%BC-%EB%A7%88%EC%B9%98%EA%B3%A0-cfb3edfe6f04)
