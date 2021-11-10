@@ -141,3 +141,53 @@ class Salesperson extends Employee {
 }
 ```
 
+## [12-6] 타입 코드를 서브클래스로 바꾸기
+
+### Before
+
+```typescript
+function createEmployee(name, type) {
+  return new Employee(name, type);
+}
+```
+
+### After
+
+```typescript
+function createEmployee(name, type) {
+  switch (type) {
+    case "engineer": return new Engineer(name);
+    case "salesperson": return new Salesperson(name);
+    case "manager": return new Manager(name);
+  }
+}
+```
+
+
+## [12-7] 서브클래스 제거하기
+
+### Before
+
+```typescript
+class Person {
+  get genderCode() { return "X"; }
+}
+
+class Male extends Person {
+  get genderCode() { return "M"; }
+}
+
+class Female extends Person {
+  get genderCode() { return "F"; }
+}
+```
+
+### After
+
+```typescript
+class Person {
+  get genderCode() {
+    return this._genderCode;
+  }
+}
+```
