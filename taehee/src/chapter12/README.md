@@ -117,3 +117,27 @@ class Salesperson extends Employee {
 }
 ```
 
+## [12-5] 필드 내리기
+
+### Before
+
+```typescript
+class Employee {
+  private String quota;
+}
+
+class Engineer extends Employee { ... }
+class Salesperson extends Employee { ... }
+```
+
+### After
+
+```typescript
+class Employee { ... }
+
+class Engineer extends Employee { ... }
+class Salesperson extends Employee { 
+  protected String quota;
+}
+```
+
