@@ -57,3 +57,40 @@ class Engineer extends Employee { ... }
 
 해당 리팩토링으로 데이터 중복 선언을 없앨 수 있고, 해당 필드를 사용하는 동작을 서브클래스에서 슈퍼클래스로 옮길 수 있다.
 
+## [12-3] 생성자 본문 올리기
+
+### Before
+
+```typescript
+class Party {
+...
+}
+
+class Employee extends Party {
+  constructor(name, id, monthlyCost) {
+    super();
+    this._id = id;
+    this._name = name;
+    this._monthlyCost = monthlyCost;
+  }
+}
+```
+
+### After
+
+```typescript
+class Party {
+  constructor(name) {
+    this._name = name;
+  }
+}
+
+class Employee extends Party {
+  constructor(name, id, monthlyCost) {
+    super();
+    this._id = id;
+    this._monthlyCost = monthlyCost;
+  }
+}
+```
+
